@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Twitter</title>
+</head>
+<style>
+    body{
+        font-family:Verdana, Geneva, Tahoma, sans-serif;
+    }
+    p{
+        transform: translate(-10%,-10%);
+        margin-left: 51%;
+        
+        font-size: 28px;
+        margin-top: -1px;
+    }
+
+    .uname{
+        width: 188px;
+        height: 28px;
+    }
+    .btn{
+        width: 78px;
+        height: 27px;
+        font-size: 15px;
+    }
+    .form{
+        transform: translate(-50%,-50%);
+        position: absolute;
+        margin-left: 47%;
+        top: 38%;
+    }
+</style>
+<body>
+    <p>Twitter</p>
+
+<div class="form">
+    <div >
+        <label >Id</label><br>
+        <input  id="reginp" type="text" class="uname" name="uname">
+    </div>
+    <br>
+
+    <div>
+        <label >Password</label><br>
+        <input  type="password" class="uname" name="pass" 
+            required>
+    </div>
+    <button class="btn" id="reg" style="margin-top:5px">Register</button>
+    <button class="btn" id = "log" style="margin-top:5px">Login</button>
+</div>
+</body>
+
+<script  type="text/javascript"> 
+    document.getElementById("reg").onclick = function () {
+       
+        let k = document.getElementById("reginp").value
+        let q = "http://localhost:8000/register?query=" + k;
+        
+       let request = new XMLHttpRequest()
+       request.open("GET",q)
+       request.send()
+       request.onload=()=>{
+           if(request.status==200){
+               console.log("dfd")
+           }
+       }
+
+       let q1 = "http://localhost:8000/login?query=" + k;
+        
+
+       let request1 = new XMLHttpRequest()
+       request1.open("GET",q1)
+       request1.send()
+       request1.onload=()=>{
+           if(request.status==200){
+               console.log("dfd")
+           }
+       }
+
+
+       window.location.href = "http://localhost:8080/m";
+    };
+
+    document.getElementById("log").onclick = function () {
+       
+       let k = document.getElementById("reginp").value
+       let q = "http://localhost:8000/login?query=" + k;
+       
+      let request = new XMLHttpRequest()
+      request.open("GET",q)
+      request.send()
+      request.onload=()=>{
+          if(request.status==200){
+              console.log("dfd")
+          }
+      }
+
+      window.location.href = "http://localhost:8080/m";
+   };
+
+
+   
+
+
+</script>
+
+
+
+</html>

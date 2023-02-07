@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    body{
+        font-family:Verdana, Geneva, Tahoma, sans-serif;
+    }
+    p{
+        transform: translate(-10%,-10%);
+        margin-left: 51%;
+        
+        font-size: 28px;
+        margin-top: -1px;
+    }
+    .logoff{
+        width:180px;
+        font-size: 18px;
+        margin-left: 40px;
+        height: 27px;
+    }
+    .label{
+        margin-left: 15px;
+        border-bottom: 2px solid #2b5e70
+    }
+    #tweet{
+        height: 30px;
+        width: 250px;
+        margin-left: 5px;
+    }
+    #tweetbut{
+        height: 28px;
+        font-size: 15px;
+    }
+    #fol{
+        margin-left: 5px;
+        margin-top: 30px;
+    }
+    #follow{
+        height: 35px;
+        width: 250px;
+    }
+    #folbut{
+        height: 28px;
+        font-size: 15px;
+    }
+    #men{
+        margin-left: 5px;
+    }
+    #men input{
+        height: 30px;
+        width: 250px;
+    }
+    .mbut{
+        height: 28px;
+        font-size: 15px;
+
+    }
+
+    #tweetlist{
+        margin-top: 10%;
+
+    }
+    </style>
+<body>
+     <p>Twitter</p>
+
+     <button class="logoff" id="logout" style="float: left; cursor: pointer;  margin-right: 5px;margin-top:20px">Log off</button><br>
+     <div style="width: 300px;margin-top:70px">
+        <div style="width: 150px;  padding: 5px;">
+            <label class="label"><b>Followers</b></label>
+            <ul id="lstFoll">
+            </ul>
+        </div>
+        <br>
+        <div style="width: 140px; display: inline-grid;">
+            <label class = 'label' ><b>Following</b></label>
+            <ul id="lstFol">
+            </ul>
+        </div>
+    </div>
+
+
+    <div >
+        
+        <div id="sendTwtSectionId" >
+            <div style="margin-left:5px">Tweet</div><br>
+            <textarea type="text"  id="tweet" ></textarea>
+            <br>
+            <br>
+            <button id="tweetbut" >Send</button>
+        </div>
+        <div id="fol" >
+            <div>Follow </div>
+            <br>
+            <input type="text"  id="follow" >
+            <br>
+            <br>
+            <button id="folbut"  style="margin: 5px;">Follow</button>
+        </div>
+        
+        <br>
+        <br>
+        <br>
+        <br>
+        <div id="men">
+            <div>Mention:</div>
+            <br>
+            <input type="text"  id="mention" >
+            <br>
+            <br>
+            <button class="mbut" id="hash" >Search Hashtag</button>
+            <button class="mbut" id="menti" >Mention</button>
+            <br>
+            <br>
+            <br>
+            <div id="menhash" style="margin-left: 50px;">
+                <div>
+                    <label">Hashtag/mentions :-</label>
+                </div>        
+                <ul id="searchResultId" ></ul>
+            </div>
+        </div>
+
+        <div id="tweetlist" >
+            <div style="text-align: center;">
+                <br>
+                <br>
+                <br>
+                <label style="font-size: 30px;">Tweets</label>
+            </div>
+            <ol id="tweetid">
+            </ol>
+        </div>
+    </div>
+</body>
+
+<script  type="text/javascript"> 
+    document.getElementById("tweetbut").onclick = function () {
+       
+        let k = document.getElementById("tweet").value
+
+        let q = "http://localhost:8000/tweet?query=" + k.replace('#','%23');
+        
+       let request = new XMLHttpRequest()
+       request.open("GET",q)
+       request.send()
+       request.onload=()=>{
+           if(request.status==200){
+               console.log("dfd")
+           }
+       }
+
+       
+    };
+
+    document.getElementById("followbut").onclick = function () {
+       
+       let k = document.getElementById("follow").value
+       let q = "http://localhost:8000/follow?query=" + k;
+       
+      let request = new XMLHttpRequest()
+      request.open("GET",q)
+      request.send()
+      request.onload=()=>{
+          if(request.status==200){
+              console.log("dfd")
+          }
+      }
+
+      
+   };
+
+
+
+
+   document.getElementById("hash").onclick = function () {
+       
+       let k = document.getElementById("mention").value
+       let q = "http://localhost:8000/search?query=" + k.replace('#','%23');
+       
+      let request = new XMLHttpRequest()
+      request.open("GET",q)
+      request.send()
+      request.onload=()=>{
+          if(request.status==200){
+              console.log("dfd")
+          }
+      }
+
+      
+   };
+
+
+
+   document.getElementById("menti").onclick = function () {
+       
+      
+       let q = "http://localhost:8000/mention";
+       
+      let request = new XMLHttpRequest()
+      request.open("GET",q)
+      request.send()
+      request.onload=()=>{
+          if(request.status==200){
+              console.log("dfd")
+          }
+      }
+
+     
+   };
+
+
+   document.getElementById("retweet").onclick = function () {
+       
+      
+       let q = "http://localhost:8000/retweet";
+       
+      let request = new XMLHttpRequest()
+      request.open("GET",q)
+      request.send()
+      request.onload=()=>{
+          if(request.status==200){
+              console.log("dfd")
+          }
+      }
+
+      
+   };
+
+   var refershUserTimeline = function (objResponse) {
+
+var unordLst = document.getElementById("tweetlist");
+if (objResponse.length) {
+    unordLst.innerHTML = "";
+}
+
+for (var i = 0; i < objResponse.length; i++) {
+
+    var tweet = objResponse[i];
+    var li = document.createElement('li');
+    li.style.marginBottom = "10px";
+    var button = document.createElement('button');
+    button.textContent = "Retweet";
+    button.setAttribute("id", "retweetbut");
+    button.style.lineHeight = "1";
+    li.appendChild(document.createTextNode(tweet));
+    li.innerHTML = li.innerHTML + " ";
+    li.appendChild(button);
+    unordLst.appendChild(li);
+}
+}
+
+
+document.getElementById("logout").onclick = function () {
+       
+      
+       let q = "http://localhost:8000/logoff";
+       
+      let request = new XMLHttpRequest()
+      request.open("GET",q)
+      request.send()
+      request.onload=()=>{
+          if(request.status==200){
+              console.log("dfd")
+          }
+      }
+
+      
+   };
+
+
+
+
+
+
+</script>
+
+</html>
